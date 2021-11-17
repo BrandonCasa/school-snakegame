@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 
 public class SnakeGameBA extends JFrame {
   static int gridSize = 28;
-  static int gridCount = 32;
+  static int gridCount = 8;
   static List<Map.Entry<Integer, Integer>> snakeCorners = new ArrayList<>();
   static int applesEaten = 0;
   static final int appleInitialX = (int) (Math.random() * gridSize);
