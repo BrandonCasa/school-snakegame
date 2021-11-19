@@ -19,8 +19,7 @@ public class SnakeGameBA extends JFrame {
 	boolean leftDirection = false; 
 	boolean rightDirection = false; 
 	boolean upDirection = false; 
-	boolean downDirection = false; 
-
+	boolean downDirection = false;
 	// body components of the snake
 	private Image ball; 
 	private Image apple; 
