@@ -42,6 +42,12 @@ public class SnakeGameBA extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    void drawApple(Graphics g) {
+
+        g.drawImage(apple, appleInitialX, appleInitialY, null);
+
+    }
+
     void drawLines(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.draw(new Line2D.Double(0, 31, (gridSize * gridCount) + 8, 31));
@@ -77,6 +83,7 @@ public class SnakeGameBA extends JFrame {
         super.paint(g);
 
         drawLines(g);
+        drawApple(g);
     }
 
     public static void main(String[] args) {
