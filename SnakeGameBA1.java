@@ -132,7 +132,7 @@ class Grid extends Renderable {
     }
 }
 
-public class SnakeGameBA extends JFrame {
+public class SnakeGameBA1 extends JFrame {
 
     /**
      For direction
@@ -143,14 +143,14 @@ public class SnakeGameBA extends JFrame {
 	boolean downDirection = false;
     // body components of the snake
     private final Grid grid;
-    static int GRID_WIDTH = 25, GRID_HEIGHT = 22, CELL_SIZE = 25;
+    static int GRID_WIDTH = 32, GRID_HEIGHT = 28, CELL_SIZE = 32;
     static List<Map.Entry<Integer, Integer>> snakeCorners = new ArrayList<>();
     static int applesEaten = 0;
     static final int appleInitialX = (int) (Math.random() * GRID_WIDTH);
     static final int appleInitialY = (int) (Math.random() * GRID_WIDTH);
     static Map.Entry<Integer, Integer> currentAppleLocationInitial = Map.entry(appleInitialY, appleInitialX);
 
-    public SnakeGameBA() {
+    public SnakeGameBA1() {
         super("Snake Game");
         setSize(
             GRID_WIDTH * CELL_SIZE + CELL_SIZE,
