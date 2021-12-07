@@ -63,35 +63,6 @@ class Position {
 
 class Cell extends Renderable {
 
-<<<<<<< HEAD
-    private final int x, y, size, offset;
-    private CellState state;
-
-    public Cell(int x, int y, int size, int offset) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.offset = offset;
-        this.state = CellState.EMPTY;
-    }
-
-    public CellState getState() {
-        return state;
-    }
-
-    public void setState(CellState state) {
-        this.state = state;
-    }
-
-    @Override
-        public void render(Graphics2D g) {
-            int baseX = offset + size * x;
-            int baseY = offset + 25 + size * y;
-            g.drawImage(state.getImage(), baseX, baseY, size, size, null);
-            g.setColor(Color.BLACK);
-            g.drawRect(baseX, baseY, size, size);
-        }
-=======
   private final int x, y, size, offset;
   private CellState state;
 
@@ -119,64 +90,10 @@ class Cell extends Renderable {
     g.setColor(Color.BLACK);
     g.drawRect(baseX, baseY, size, size);
   }
->>>>>>> e2fb7b6f0012c730ed5fe91451226c5c0cb7215c
 }
 
 class Grid extends Renderable {
 
-<<<<<<< HEAD
-    private final int height, width;
-    private final Cell[][] grid;
-    private final Random rand;
-    private Position applePos, snakePos;
-
-    public Grid(int height, int width, int cellSize, int offset) {
-        this.height = height;
-        this.width = width;
-        this.grid = new Cell[height][width];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j] = new Cell(j, i, cellSize, offset);
-            }
-        }
-        this.rand = new Random();
-        updateApple();
-        updateSnake();
-    }
-
-    private Position getEmptyPosition() {
-        int x, y;
-        do {
-            x = rand.nextInt(width);
-            y = rand.nextInt(height);
-        } while (grid[y][x].getState() != CellState.EMPTY);
-        return new Position(x, y);
-    }
-
-    private void updateApple() {
-        Position next = getEmptyPosition();
-        updatePos(next, CellState.APPLE);
-        if (applePos != null)
-            updatePos(applePos, CellState.EMPTY);
-        this.applePos = next;
-    }
-
-    private void updateSnake() {
-        snakePos = getEmptyPosition();
-        updatePos(snakePos, CellState.HEAD);
-    }
-
-    private void updatePos(Position pos, CellState state) {
-        int x = pos.getX(), y = pos.getY();
-        grid[y][x].setState(state);
-    }
-
-    @Override
-        public void render(Graphics2D g) {
-            for (Cell[] row : grid) for (Cell c : row)
-                c.render(g);
-        }
-=======
   private final int height, width;
   private final Cell[][] grid;
   private final Random rand;
@@ -229,153 +146,153 @@ class Grid extends Renderable {
       for (Cell c : row)
         c.render(g);
   }
->>>>>>> e2fb7b6f0012c730ed5fe91451226c5c0cb7215c
 }
 
 public class SnakeGameBA extends JFrame {
 
-<<<<<<< HEAD
-    /**
-      For direction
-     */
-    boolean leftDirection = false;
-    boolean rightDirection = false;
-    boolean upDirection = false;
-    boolean downDirection = false;
-    // body components of the snake
-    private final Grid grid;
-    static int GRID_WIDTH = 25, GRID_HEIGHT = 22, CELL_SIZE = 25;
-    static List<Map.Entry<Integer, Integer>> snakeCorners = new ArrayList<>();
-    static int applesEaten = 0;
-    static final int appleInitialX = (int) (Math.random() * GRID_WIDTH);
-    static final int appleInitialY = (int) (Math.random() * GRID_WIDTH);
-    static Map.Entry<Integer, Integer> currentAppleLocationInitial = Map.entry(appleInitialY, appleInitialX);
+  <<<<<<<HEAD
+  /**
+   * For direction
+   */
+  boolean leftDirection = false;
+  boolean rightDirection = false;
+  boolean upDirection = false;
+  boolean downDirection = false;
+  // body components of the snake
+  private final Grid grid;
+  static int GRID_WIDTH = 25, GRID_HEIGHT = 22, CELL_SIZE = 25;
+  static List<Map.Entry<Integer, Integer>> snakeCorners = new ArrayList<>();
+  static int applesEaten = 0;
+  static final int appleInitialX = (int) (Math.random() * GRID_WIDTH);
+  static final int appleInitialY = (int) (Math.random() * GRID_WIDTH);
+  static Map.Entry<Integer, Integer> currentAppleLocationInitial = Map.entry(appleInitialY, appleInitialX);
 
-    public SnakeGameBA() {
-        super("Snake Game");
-        setSize(
-                GRID_WIDTH * CELL_SIZE + CELL_SIZE,
-                GRID_HEIGHT * CELL_SIZE + CELL_SIZE + 25
-               );
-        addKeyListener(new TAdapter());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        this.grid = new Grid(GRID_HEIGHT, GRID_WIDTH, CELL_SIZE, CELL_SIZE / 2);
-        //        loadImages();
+  public SnakeGameBA() {
+    super("Snake Game");
+    setSize(
+        GRID_WIDTH * CELL_SIZE + CELL_SIZE,
+        GRID_HEIGHT * CELL_SIZE + CELL_SIZE + 25);
+    addKeyListener(new TAdapter());
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setResizable(false);
+    setLocationRelativeTo(null);
+    this.grid = new Grid(GRID_HEIGHT, GRID_WIDTH, CELL_SIZE, CELL_SIZE / 2);
+    // loadImages();
+  }
+
+  private void move() {
+
+    for (int z = dots; z > 0; z--) {
+      x[z] = x[(z - 1)];
+      y[z] = y[(z - 1)];
     }
 
-    private void move() {
-
-        for (int z = dots; z > 0; z--) {
-            x[z] = x[(z - 1)];
-            y[z] = y[(z - 1)];
-        }
-
-        if (leftDirection) {
-            x[0] -= DOT_SIZE;
-        }
-
-        if (rightDirection) {
-            x[0] += DOT_SIZE;
-        }
-
-        if (upDirection) {
-            y[0] -= DOT_SIZE;
-        }
-
-        if (downDirection) {
-            y[0] += DOT_SIZE;
-        }
+    if (leftDirection) {
+      x[0] -= DOT_SIZE;
     }
 
-    //    void drawApple(Graphics g) {
-    //
-    //        g.drawImage(apple, appleInitialX, appleInitialY, null);
-    //
-    //    }
-
-    //    void drawLines(Graphics g) {
-    //        Graphics2D g2d = (Graphics2D) g;
-    //        g2d.draw(new Line2D.Double(0, 31, (gridSize * gridCount) + 8, 31));
-    //        g2d.draw(new Line2D.Double((gridSize * gridCount) + 8, 31, (gridSize * gridCount) + 8,
-    //                (gridSize * gridCount) + gridSize));
-    //        g2d.draw(new Line2D.Double(0, (gridSize * gridCount) + gridSize, (gridSize * gridCount) + 8,
-    //                (gridSize * gridCount) + gridSize));
-    //        for (int x = 0; x < gridCount; x++) {
-    //            for (int y = 1; y <= gridCount; y++) {
-    //                g2d.draw(new Line2D.Double(((x * gridSize) + 8), y * gridSize, ((x * gridSize) + 8) + gridSize, y * gridSize));
-    //                g2d.draw(new Line2D.Double(((x * gridSize) + 8), y * gridSize, ((x * gridSize) + 8), y * gridSize + gridSize));
-    //            }
-    //        }
-    //    }
-
-    /**
-      Load images dots etc.
-     */
-
-    //    public void loadImages(){
-    //        ImageIcon im1 = new ImageIcon("images/dot.jpeg");
-    //        body = im1.getImage();
-    //
-    //        ImageIcon im2 = new ImageIcon("images/apple.jpeg");
-    //        apple = im2.getImage();
-    //
-    //        ImageIcon im3 = new ImageIcon("images/head.jpeg");
-    //        head = im3.getImage();
-    //    }
-
-
-    private class TAdapter extends KeyAdapter {
-
-        @Override
-            public void keyPressed(KeyEvent e) {
-
-                int key = e.getKeyCode();
-
-                if ((key == KeyEvent.VK_LEFT) && (!rightDirection)) {
-                    leftDirection = true;
-                    upDirection = false;
-                    downDirection = false;
-                }
-
-                if ((key == KeyEvent.VK_RIGHT) && (!leftDirection)) {
-                    rightDirection = true;
-                    upDirection = false;
-                    downDirection = false;
-                }
-
-                if ((key == KeyEvent.VK_UP) && (!downDirection)) {
-                    upDirection = true;
-                    rightDirection = false;
-                    leftDirection = false;
-                }
-
-                if ((key == KeyEvent.VK_DOWN) && (!upDirection)) {
-                    downDirection = true;
-                    rightDirection = false;
-                    leftDirection = false;
-                }
-            }
+    if (rightDirection) {
+      x[0] += DOT_SIZE;
     }
 
-
-    public void paint(Graphics g) {
-        super.paint(g);
-        grid.render((Graphics2D) g);
-        //        drawLines(g);
-        //        drawApple(g);
+    if (upDirection) {
+      y[0] -= DOT_SIZE;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                new SnakeGameBA().setVisible(true);
-                }
-                });
+    if (downDirection) {
+      y[0] += DOT_SIZE;
     }
-=======
+  }
+
+  // void drawApple(Graphics g) {
+  //
+  // g.drawImage(apple, appleInitialX, appleInitialY, null);
+  //
+  // }
+
+  // void drawLines(Graphics g) {
+  // Graphics2D g2d = (Graphics2D) g;
+  // g2d.draw(new Line2D.Double(0, 31, (gridSize * gridCount) + 8, 31));
+  // g2d.draw(new Line2D.Double((gridSize * gridCount) + 8, 31, (gridSize *
+  // gridCount) + 8,
+  // (gridSize * gridCount) + gridSize));
+  // g2d.draw(new Line2D.Double(0, (gridSize * gridCount) + gridSize, (gridSize *
+  // gridCount) + 8,
+  // (gridSize * gridCount) + gridSize));
+  // for (int x = 0; x < gridCount; x++) {
+  // for (int y = 1; y <= gridCount; y++) {
+  // g2d.draw(new Line2D.Double(((x * gridSize) + 8), y * gridSize, ((x *
+  // gridSize) + 8) + gridSize, y * gridSize));
+  // g2d.draw(new Line2D.Double(((x * gridSize) + 8), y * gridSize, ((x *
+  // gridSize) + 8), y * gridSize + gridSize));
+  // }
+  // }
+  // }
+
+  /**
+   * Load images dots etc.
+   */
+
+  // public void loadImages(){
+  // ImageIcon im1 = new ImageIcon("images/dot.jpeg");
+  // body = im1.getImage();
+  //
+  // ImageIcon im2 = new ImageIcon("images/apple.jpeg");
+  // apple = im2.getImage();
+  //
+  // ImageIcon im3 = new ImageIcon("images/head.jpeg");
+  // head = im3.getImage();
+  // }
+
+  private class TAdapter extends KeyAdapter {
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+      int key = e.getKeyCode();
+
+      if ((key == KeyEvent.VK_LEFT) && (!rightDirection)) {
+        leftDirection = true;
+        upDirection = false;
+        downDirection = false;
+      }
+
+      if ((key == KeyEvent.VK_RIGHT) && (!leftDirection)) {
+        rightDirection = true;
+        upDirection = false;
+        downDirection = false;
+      }
+
+      if ((key == KeyEvent.VK_UP) && (!downDirection)) {
+        upDirection = true;
+        rightDirection = false;
+        leftDirection = false;
+      }
+
+      if ((key == KeyEvent.VK_DOWN) && (!upDirection)) {
+        downDirection = true;
+        rightDirection = false;
+        leftDirection = false;
+      }
+    }
+  }
+
+  public void paint(Graphics g) {
+    super.paint(g);
+    grid.render((Graphics2D) g);
+    // drawLines(g);
+    // drawApple(g);
+  }
+
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        new SnakeGameBA().setVisible(true);
+      }
+    });
+  }=======
+
   /**
    * For direction
    */
@@ -458,7 +375,5 @@ public class SnakeGameBA extends JFrame {
         new SnakeGameBA().setVisible(true);
       }
     });
-  }
->>>>>>> e2fb7b6f0012c730ed5fe91451226c5c0cb7215c
+  }>>>>>>>e2fb7b6f0012c730ed5fe91451226c5c0cb7215c
 }
-
