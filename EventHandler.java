@@ -1,21 +1,19 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class EventHandler implements KeyListener {
-  public EventHandler() {
+interface OnSnakeEventListener {
+  void onKeyPressed(int key);
+}
 
+public class EventHandler implements KeyListener {
+  private OnSnakeEventListener sListener;
+
+  public EventHandler(OnSnakeEventListener sListener) {
+    this.sListener = sListener;
   }
 
   @Override
   public void keyTyped(KeyEvent e) {
-
-    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-      System.out.println("Right key typed");
-    }
-    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-      System.out.println("Left key typed");
-    }
-
   }
 
   @Override
@@ -23,9 +21,11 @@ public class EventHandler implements KeyListener {
 
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
       System.out.println("Right key pressed");
+      sListener.onKeyPressed(e.getKeyCode());
     }
     if (e.getKeyCode() == KeyEvent.VK_LEFT) {
       System.out.println("Left key pressed");
+      sListener.onKeyPressed(e.getKeyCode());
     }
 
   }
