@@ -10,9 +10,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.SwingUtilities;
 
-public class SnakeGameBA extends JFrame {
+public class SnakeGameBA extends JFrame implements KeyListener {
   static int gridSize = 28;
   static int gridCount = 32;
   static int applesEaten = 0;
@@ -28,6 +30,7 @@ public class SnakeGameBA extends JFrame {
 
   public SnakeGameBA() {
     super("Lines Drawing Demo");
+    addKeyListener(this);
 
     setSize((gridSize * gridCount) + 16, (gridSize * gridCount) + 32 + 4);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +59,7 @@ public class SnakeGameBA extends JFrame {
 
   public void drawSnakePart(Graphics g, Map.Entry<Integer, Integer> location) {
     Graphics2D g2d = (Graphics2D) g;
-    g2d.drawImage(bodyImg, 8 + location.getKey(), gridSize + location.getValue(), gridSize, gridSize, null);
+    g2d.drawImage(bodyImg, location.getKey() + 8, gridSize + location.getValue(), gridSize, gridSize, null);
     return;
   }
 
@@ -70,11 +73,18 @@ public class SnakeGameBA extends JFrame {
     super.paint(g);
 
     drawLines(g);
-    for (int i = 0; i < snakeCorners.size() - 1; i++) {
-      Map.Entry<Integer, Integer> location = snakeCorners.get(i);
-      drawSnakePart(g, location);
+    while (true) {
+      int done = 0;
+      for (int i = 0; i < snakeCorners.size() - 1; i++) {
+        if (done <= applesEaten) {
+          int index = snakeCorners.size() - done;
+          Map.Entry<Integer, Integer> location = snakeCorners.get(index);
+          drawSnakePart(g, location);
+          done++;
+        }
+      }
+      drawSnakeHead(g, snakeCorners.get(snakeCorners.size() - 1));
     }
-    drawSnakeHead(g, snakeCorners.get(snakeCorners.size() - 1));
   }
 
   public static void main(String[] args) {
@@ -82,7 +92,32 @@ public class SnakeGameBA extends JFrame {
       @Override
       public void run() {
         new SnakeGameBA().setVisible(true);
+
       }
     });
+  }
+
+  @Override
+  public void keyTyped(KeyEvent e) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+      System.out.println("Right key pressed");
+      Map.Entry<Integer, Integer> currentSnakeCorner = snakeCorners.get(snakeCorners.size() - 1);
+      int newKey = currentSnakeCorner.getKey() + 28;
+      currentSnakeCorner = Map.entry(newKey, currentSnakeCorner.getValue());
+      snakeCorners.add(currentSnakeCorner);
+    }
+
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
+    // TODO Auto-generated method stub
+
   }
 }
