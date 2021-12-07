@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 abstract class Renderable {
 
@@ -69,13 +71,13 @@ class Cell extends Renderable {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        int baseX = offset + size * x;
-        int baseY = offset + 25 + size * y;
-        g.drawImage(state.getImage(), baseX, baseY, size, size, null);
-        g.setColor(Color.BLACK);
-        g.drawRect(baseX, baseY, size, size);
-    }
+        public void render(Graphics2D g) {
+            int baseX = offset + size * x;
+            int baseY = offset + 25 + size * y;
+            g.drawImage(state.getImage(), baseX, baseY, size, size, null);
+            g.setColor(Color.BLACK);
+            g.drawRect(baseX, baseY, size, size);
+        }
 }
 
 class Grid extends Renderable {
@@ -127,21 +129,21 @@ class Grid extends Renderable {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        for (Cell[] row : grid) for (Cell c : row)
-            c.render(g);
-    }
+        public void render(Graphics2D g) {
+            for (Cell[] row : grid) for (Cell c : row)
+                c.render(g);
+        }
 }
 
 public class SnakeGameBA extends JFrame {
 
     /**
-     For direction
+      For direction
      */
     boolean leftDirection = false;
-	boolean rightDirection = false;
-	boolean upDirection = false;
-	boolean downDirection = false;
+    boolean rightDirection = false;
+    boolean upDirection = false;
+    boolean downDirection = false;
     // body components of the snake
     private final Grid grid;
     static int GRID_WIDTH = 25, GRID_HEIGHT = 22, CELL_SIZE = 25;
@@ -154,66 +156,126 @@ public class SnakeGameBA extends JFrame {
     public SnakeGameBA() {
         super("Snake Game");
         setSize(
-            GRID_WIDTH * CELL_SIZE + CELL_SIZE,
-            GRID_HEIGHT * CELL_SIZE + CELL_SIZE + 25
-        );
+                GRID_WIDTH * CELL_SIZE + CELL_SIZE,
+                GRID_HEIGHT * CELL_SIZE + CELL_SIZE + 25
+               );
+        addKeyListener(new TAdapter());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         this.grid = new Grid(GRID_HEIGHT, GRID_WIDTH, CELL_SIZE, CELL_SIZE / 2);
-//        loadImages();
+        //        loadImages();
     }
 
-//    void drawApple(Graphics g) {
-//
-//        g.drawImage(apple, appleInitialX, appleInitialY, null);
-//
-//    }
+    private void move() {
 
-//    void drawLines(Graphics g) {
-//        Graphics2D g2d = (Graphics2D) g;
-//        g2d.draw(new Line2D.Double(0, 31, (gridSize * gridCount) + 8, 31));
-//        g2d.draw(new Line2D.Double((gridSize * gridCount) + 8, 31, (gridSize * gridCount) + 8,
-//                (gridSize * gridCount) + gridSize));
-//        g2d.draw(new Line2D.Double(0, (gridSize * gridCount) + gridSize, (gridSize * gridCount) + 8,
-//                (gridSize * gridCount) + gridSize));
-//        for (int x = 0; x < gridCount; x++) {
-//            for (int y = 1; y <= gridCount; y++) {
-//                g2d.draw(new Line2D.Double(((x * gridSize) + 8), y * gridSize, ((x * gridSize) + 8) + gridSize, y * gridSize));
-//                g2d.draw(new Line2D.Double(((x * gridSize) + 8), y * gridSize, ((x * gridSize) + 8), y * gridSize + gridSize));
-//            }
-//        }
-//    }
+        for (int z = dots; z > 0; z--) {
+            x[z] = x[(z - 1)];
+            y[z] = y[(z - 1)];
+        }
+
+        if (leftDirection) {
+            x[0] -= DOT_SIZE;
+        }
+
+        if (rightDirection) {
+            x[0] += DOT_SIZE;
+        }
+
+        if (upDirection) {
+            y[0] -= DOT_SIZE;
+        }
+
+        if (downDirection) {
+            y[0] += DOT_SIZE;
+        }
+    }
+
+    //    void drawApple(Graphics g) {
+    //
+    //        g.drawImage(apple, appleInitialX, appleInitialY, null);
+    //
+    //    }
+
+    //    void drawLines(Graphics g) {
+    //        Graphics2D g2d = (Graphics2D) g;
+    //        g2d.draw(new Line2D.Double(0, 31, (gridSize * gridCount) + 8, 31));
+    //        g2d.draw(new Line2D.Double((gridSize * gridCount) + 8, 31, (gridSize * gridCount) + 8,
+    //                (gridSize * gridCount) + gridSize));
+    //        g2d.draw(new Line2D.Double(0, (gridSize * gridCount) + gridSize, (gridSize * gridCount) + 8,
+    //                (gridSize * gridCount) + gridSize));
+    //        for (int x = 0; x < gridCount; x++) {
+    //            for (int y = 1; y <= gridCount; y++) {
+    //                g2d.draw(new Line2D.Double(((x * gridSize) + 8), y * gridSize, ((x * gridSize) + 8) + gridSize, y * gridSize));
+    //                g2d.draw(new Line2D.Double(((x * gridSize) + 8), y * gridSize, ((x * gridSize) + 8), y * gridSize + gridSize));
+    //            }
+    //        }
+    //    }
 
     /**
-     Load images dots etc.
+      Load images dots etc.
      */
 
-//    public void loadImages(){
-//        ImageIcon im1 = new ImageIcon("images/dot.jpeg");
-//        body = im1.getImage();
-//
-//        ImageIcon im2 = new ImageIcon("images/apple.jpeg");
-//        apple = im2.getImage();
-//
-//        ImageIcon im3 = new ImageIcon("images/head.jpeg");
-//        head = im3.getImage();
-//    }
+    //    public void loadImages(){
+    //        ImageIcon im1 = new ImageIcon("images/dot.jpeg");
+    //        body = im1.getImage();
+    //
+    //        ImageIcon im2 = new ImageIcon("images/apple.jpeg");
+    //        apple = im2.getImage();
+    //
+    //        ImageIcon im3 = new ImageIcon("images/head.jpeg");
+    //        head = im3.getImage();
+    //    }
+
+
+    private class TAdapter extends KeyAdapter {
+
+        @Override
+            public void keyPressed(KeyEvent e) {
+
+                int key = e.getKeyCode();
+
+                if ((key == KeyEvent.VK_LEFT) && (!rightDirection)) {
+                    leftDirection = true;
+                    upDirection = false;
+                    downDirection = false;
+                }
+
+                if ((key == KeyEvent.VK_RIGHT) && (!leftDirection)) {
+                    rightDirection = true;
+                    upDirection = false;
+                    downDirection = false;
+                }
+
+                if ((key == KeyEvent.VK_UP) && (!downDirection)) {
+                    upDirection = true;
+                    rightDirection = false;
+                    leftDirection = false;
+                }
+
+                if ((key == KeyEvent.VK_DOWN) && (!upDirection)) {
+                    downDirection = true;
+                    rightDirection = false;
+                    leftDirection = false;
+                }
+            }
+    }
 
 
     public void paint(Graphics g) {
         super.paint(g);
         grid.render((Graphics2D) g);
-//        drawLines(g);
-//        drawApple(g);
+        //        drawLines(g);
+        //        drawApple(g);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+                @Override
+                public void run() {
                 new SnakeGameBA().setVisible(true);
-            }
-        });
+                }
+                });
     }
 }
+
