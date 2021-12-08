@@ -27,6 +27,8 @@ public class SnakeGameBA extends JFrame implements KeyListener {
   static Map.Entry<Integer, Integer> currentAppleLocationInitial = Map.entry(appleInitialY, appleInitialX);
   static BufferedImage bodyImg = null;
   static BufferedImage headImg = null;
+  static int direction = 0; // 0=Left, 1=Up, 2=Right, 3=Down
+  static Timer timer = new Timer();
 
   public SnakeGameBA() {
     super("Lines Drawing Demo");
@@ -73,18 +75,19 @@ public class SnakeGameBA extends JFrame implements KeyListener {
     super.paint(g);
 
     drawLines(g);
-    while (true) {
-      int done = 0;
-      for (int i = 0; i < snakeCorners.size() - 1; i++) {
-        if (done <= applesEaten) {
-          int index = snakeCorners.size() - done;
-          Map.Entry<Integer, Integer> location = snakeCorners.get(index);
-          drawSnakePart(g, location);
-          done++;
-        }
+
+    /* DRAWING CORNERS
+    int done = 0;
+    for (int i = 0; i < snakeCorners.size() - 1; i++) {
+      if (done <= applesEaten) {
+        int index = snakeCorners.size() - done;
+        Map.Entry<Integer, Integer> location = snakeCorners.get(index);
+        drawSnakePart(g, location);
+        done++;
       }
-      drawSnakeHead(g, snakeCorners.get(snakeCorners.size() - 1));
     }
+    drawSnakeHead(g, snakeCorners.get(snakeCorners.size() - 1));
+    */
   }
 
   public static void main(String[] args) {
@@ -92,7 +95,6 @@ public class SnakeGameBA extends JFrame implements KeyListener {
       @Override
       public void run() {
         new SnakeGameBA().setVisible(true);
-
       }
     });
   }
