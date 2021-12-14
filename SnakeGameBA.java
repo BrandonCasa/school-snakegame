@@ -45,6 +45,16 @@ public class SnakeGameBA extends JFrame implements KeyListener {
     }
   }
 
+public void paint(Graphics g){
+        // clears the screen
+        super.paint(g);
+        // render Mickey
+        AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
+        tx.rotate(Math.PI);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(mickeyImg, tx, null);
+    }
+
   void drawLines(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     g2d.draw(new Line2D.Double((gridSize * gridCount) + 8, 31, (gridSize * gridCount) + 8,
@@ -100,6 +110,16 @@ public class SnakeGameBA extends JFrame implements KeyListener {
   }
 
   @Override
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        new SnakeGameBA().setVisible(true);
+      }
+    });
+  }
+
+  @Override
   public void keyTyped(KeyEvent e) {
     // TODO Auto-generated method stub
 
@@ -113,13 +133,3 @@ public class SnakeGameBA extends JFrame implements KeyListener {
       int newKey = currentSnakeCorner.getKey() + 28;
       currentSnakeCorner = Map.entry(newKey, currentSnakeCorner.getValue());
       snakeCorners.add(currentSnakeCorner);
-    }
-
-  }
-
-  @Override
-  public void keyReleased(KeyEvent e) {
-    // TODO Auto-generated method stub
-
-  }
-}
