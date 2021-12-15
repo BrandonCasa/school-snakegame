@@ -42,10 +42,7 @@ public class Snake implements Drawable, Entity {
     }
 
     GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
-    System.out.println("Keyboard hook successfully started, press [escape] key to shutdown. Connected keyboards:");
-    for (Entry<Long, String> keyboard : GlobalKeyboardHook.listKeyboards().entrySet()) {
-      System.out.format("%d: %s\n", keyboard.getKey(), keyboard.getValue());
-    }
+    System.out.println("Keyboard hook successfully started, press [escape] key to shutdown. Beginning Game.");
 
     keyboardHook.addKeyListener(new GlobalKeyAdapter() {
 
