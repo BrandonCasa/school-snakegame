@@ -28,6 +28,7 @@ public class Snake implements Drawable, Entity {
   private BufferedImage imgDown = null;
   private BufferedImage imgLeft = null;
   private BufferedImage imgApple = null;
+  private BufferedImage imgBody = null;
 
   public Snake() {
     try {
@@ -36,6 +37,7 @@ public class Snake implements Drawable, Entity {
       imgDown = ImageIO.read(getClass().getClassLoader().getResource("images/headDown.png"));
       imgLeft = ImageIO.read(getClass().getClassLoader().getResource("images/headLeft.png"));
       imgApple = ImageIO.read(getClass().getClassLoader().getResource("images/apple.png"));
+      imgBody = ImageIO.read(getClass().getClassLoader().getResource("images/body.png"));
     } catch (IOException e) {
     }
 
@@ -50,16 +52,24 @@ public class Snake implements Drawable, Entity {
       @Override
       public void keyPressed(GlobalKeyEvent event) {
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_RIGHT) {
-          direction = 1;
+          if (direction != 3) {
+            direction = 1;
+          }
         }
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_LEFT) {
-          direction = 3;
+          if (direction != 1) {
+            direction = 3;
+          }
         }
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_UP) {
-          direction = 0;
+          if (direction != 2) {
+            direction = 0;
+          }
         }
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_DOWN) {
-          direction = 2;
+          if (direction != 0) {
+            direction = 2;
+          }
         }
 
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_ESCAPE) {
@@ -79,7 +89,13 @@ public class Snake implements Drawable, Entity {
    * From interface Drawable
    */
   public void draw(Graphics g) {
-    // Draw Snake
+
+    // Draw Body
+    for (int i = 0; i < pastX.size() - 1; i++) {
+      g.drawImage(imgBody, pastX.get(i), pastY.get(i), 25, 25, null);
+    }
+
+    // Draw Head
     if (direction == 0) {
       g.drawImage(imgUp, pastX.get(pastX.size() - 1), pastY.get(pastY.size() - 1), 25, 25, null);
     } else if (direction == 1) {
@@ -101,12 +117,11 @@ public class Snake implements Drawable, Entity {
    * From interface Entitiy
    */
   public void tick() {
+    // If on apple
     if (pastX.get(pastX.size() - 1) == appleX && pastY.get(pastY.size() - 1) == appleY) {
       score++;
       appleX = (int) (25 * (Math.ceil(Math.abs((Math.random() * 450.0) / 25))));
       appleY = (int) (25 * (Math.ceil(Math.abs((Math.random() * 450.0) / 25))));
-      pastX.add(pastX.get(pastX.size() - 1));
-      pastY.add(pastY.get(pastY.size() - 1));
     }
   }
 
@@ -114,32 +129,92 @@ public class Snake implements Drawable, Entity {
     // Up
     if (direction == 0) {
       if (pastY.get(pastY.size() - 1) >= 50) {
+        if (pastX.size() > score && score != 0) {
+          pastX.remove(0);
+          pastY.remove(0);
+        }
+        if (score > 0) {
+          pastX.add(pastX.get(pastX.size() - 1));
+          pastY.add(pastY.get(pastY.size() - 1));
+        }
+        for (int i = 0; i < pastX.size() - 1; i++) {
+          if (pastX.get(pastX.size() - 1) == pastX.get(i) && pastY.get(pastY.size() - 1) - 25 == pastY.get(i)) {
+            System.out.println("Final Score: " + score);
+            System.exit(0);
+          }
+        }
         pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) - 25);
       } else {
+        System.out.println("Final Score: " + score);
         System.exit(0);
       }
     }
     // Down
     if (direction == 2) {
       if (pastY.get(pastY.size() - 1) <= 425) {
+        if (pastX.size() > score && score != 0) {
+          pastX.remove(0);
+          pastY.remove(0);
+        }
+        if (score > 0) {
+          pastX.add(pastX.get(pastX.size() - 1));
+          pastY.add(pastY.get(pastY.size() - 1));
+        }
+        for (int i = 0; i < pastX.size() - 1; i++) {
+          if (pastX.get(pastX.size() - 1) == pastX.get(i) && pastY.get(pastY.size() - 1) + 25 == pastY.get(i)) {
+            System.out.println("Final Score: " + score);
+            System.exit(0);
+          }
+        }
         pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) + 25);
       } else {
+        System.out.println("Final Score: " + score);
         System.exit(0);
       }
     }
     // Right
     if (direction == 1) {
       if (pastX.get(pastX.size() - 1) <= 425) {
+        if (pastX.size() > score && score != 0) {
+          pastX.remove(0);
+          pastY.remove(0);
+        }
+        if (score > 0) {
+          pastX.add(pastX.get(pastX.size() - 1));
+          pastY.add(pastY.get(pastY.size() - 1));
+        }
+        for (int i = 0; i < pastX.size() - 1; i++) {
+          if (pastX.get(pastX.size() - 1) + 25 == pastX.get(i) && pastY.get(pastY.size() - 1) == pastY.get(i)) {
+            System.out.println("Final Score: " + score);
+            System.exit(0);
+          }
+        }
         pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) + 25);
       } else {
+        System.out.println("Final Score: " + score);
         System.exit(0);
       }
     }
     // Left
     if (direction == 3) {
       if (pastX.get(pastX.size() - 1) >= 50) {
+        if (pastX.size() > score && score != 0) {
+          pastX.remove(0);
+          pastY.remove(0);
+        }
+        if (score > 0) {
+          pastX.add(pastX.get(pastX.size() - 1));
+          pastY.add(pastY.get(pastY.size() - 1));
+        }
+        for (int i = 0; i < pastX.size() - 1; i++) {
+          if (pastX.get(pastX.size() - 1) - 25 == pastX.get(i) && pastY.get(pastY.size() - 1) == pastY.get(i)) {
+            System.out.println("Final Score: " + score);
+            System.exit(0);
+          }
+        }
         pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) - 25);
       } else {
+        System.out.println("Final Score: " + score);
         System.exit(0);
       }
     }
