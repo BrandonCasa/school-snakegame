@@ -14,9 +14,9 @@ public class SnakeGame extends Canvas implements Runnable {
   private boolean isRunning = true;
   private Thread thread;
 
-  private static final long NANOSECOND = 1000000000;
+  private static final long NANOS_IN_SECOND = 1000000000L;
   private static final double OPTIMAL_TICKS = 50.0;
-  private static final double OPTIMAL_TIME = NANOSECOND / OPTIMAL_TICKS;
+  private static final double OPTIMAL_TIME = NANOS_IN_SECOND / OPTIMAL_TICKS;
 
   private long lastLoopTime = System.nanoTime();
   private long currentTime;
@@ -97,9 +97,9 @@ public class SnakeGame extends Canvas implements Runnable {
       render();
 
       // reset if a second has passed
-      if (System.currentTimeMillis() - secondTimer > 335) {
+      if (System.currentTimeMillis() - secondTimer > 450) {
         updatePerSecond();
-        secondTimer += 335;
+        secondTimer += 450;
       }
     }
   }

@@ -93,12 +93,6 @@ public class Snake implements Drawable, Entity, KeyListener {
           pastX.add(pastX.get(pastX.size() - 1));
           pastY.add(pastY.get(pastY.size() - 1));
         }
-        for (int i = 0; i < pastX.size() - 1; i++) {
-          if (pastX.get(pastX.size() - 1) == pastX.get(i) && pastY.get(pastY.size() - 1) - 25 == pastY.get(i)) {
-            System.out.println("Final Score: " + score);
-            System.exit(0);
-          }
-        }
         pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) - 25);
       } else {
         System.out.println("Final Score: " + score);
@@ -115,12 +109,6 @@ public class Snake implements Drawable, Entity, KeyListener {
         if (score > 0) {
           pastX.add(pastX.get(pastX.size() - 1));
           pastY.add(pastY.get(pastY.size() - 1));
-        }
-        for (int i = 0; i < pastX.size() - 1; i++) {
-          if (pastX.get(pastX.size() - 1) == pastX.get(i) && pastY.get(pastY.size() - 1) + 25 == pastY.get(i)) {
-            System.out.println("Final Score: " + score);
-            System.exit(0);
-          }
         }
         pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) + 25);
       } else {
@@ -139,12 +127,6 @@ public class Snake implements Drawable, Entity, KeyListener {
           pastX.add(pastX.get(pastX.size() - 1));
           pastY.add(pastY.get(pastY.size() - 1));
         }
-        for (int i = 0; i < pastX.size() - 1; i++) {
-          if (pastX.get(pastX.size() - 1) + 25 == pastX.get(i) && pastY.get(pastY.size() - 1) == pastY.get(i)) {
-            System.out.println("Final Score: " + score);
-            System.exit(0);
-          }
-        }
         pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) + 25);
       } else {
         System.out.println("Final Score: " + score);
@@ -161,12 +143,6 @@ public class Snake implements Drawable, Entity, KeyListener {
         if (score > 0) {
           pastX.add(pastX.get(pastX.size() - 1));
           pastY.add(pastY.get(pastY.size() - 1));
-        }
-        for (int i = 0; i < pastX.size() - 1; i++) {
-          if (pastX.get(pastX.size() - 1) - 25 == pastX.get(i) && pastY.get(pastY.size() - 1) == pastY.get(i)) {
-            System.out.println("Final Score: " + score);
-            System.exit(0);
-          }
         }
         pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) - 25);
       } else {
