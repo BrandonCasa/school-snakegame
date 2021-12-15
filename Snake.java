@@ -17,11 +17,17 @@ public class Snake implements Drawable, Entity {
   private int direction = 0;
   private int x = ((int) (25 * (Math.ceil(Math.abs((Math.random() * 200.0) / 25))))) + 125;
   private int y = ((int) (25 * (Math.ceil(Math.abs((Math.random() * 200.0) / 25))))) + 125;
-  private BufferedImage img = null;
+  private BufferedImage imgUp = null;
+  private BufferedImage imgRight = null;
+  private BufferedImage imgDown = null;
+  private BufferedImage imgLeft = null;
 
   public Snake() {
     try {
-      img = ImageIO.read(getClass().getClassLoader().getResource("images/headUp.png"));
+      imgUp = ImageIO.read(getClass().getClassLoader().getResource("images/headUp.png"));
+      imgRight = ImageIO.read(getClass().getClassLoader().getResource("images/headRight.png"));
+      imgDown = ImageIO.read(getClass().getClassLoader().getResource("images/headDown.png"));
+      imgLeft = ImageIO.read(getClass().getClassLoader().getResource("images/headLeft.png"));
     } catch (IOException e) {
     }
 
@@ -36,16 +42,16 @@ public class Snake implements Drawable, Entity {
       @Override
       public void keyPressed(GlobalKeyEvent event) {
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_RIGHT) {
-
+          direction = 1;
         }
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_LEFT) {
-
+          direction = 3;
         }
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_UP) {
-
+          direction = 0;
         }
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_DOWN) {
-
+          direction = 2;
         }
 
         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_ESCAPE) {
@@ -66,7 +72,15 @@ public class Snake implements Drawable, Entity {
    */
   public void draw(Graphics g) {
     // Draw Snake
-    g.drawImage(img, x, y, 25, 25, null);
+    if (direction == 0) {
+      g.drawImage(imgUp, x, y, 25, 25, null);
+    } else if (direction == 1) {
+      g.drawImage(imgRight, x, y, 25, 25, null);
+    } else if (direction == 2) {
+      g.drawImage(imgDown, x, y, 25, 25, null);
+    } else if (direction == 3) {
+      g.drawImage(imgLeft, x, y, 25, 25, null);
+    }
   }
 
   /**
@@ -76,5 +90,21 @@ public class Snake implements Drawable, Entity {
   }
 
   public void second() {
+    // Up
+    if (direction == 0) {
+      y -= 25;
+    }
+    // Down
+    if (direction == 2) {
+      y += 25;
+    }
+    // Right
+    if (direction == 1) {
+      x += 25;
+    }
+    // Left
+    if (direction == 3) {
+      x -= 25;
+    }
   }
 }
