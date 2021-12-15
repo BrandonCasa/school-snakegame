@@ -18,7 +18,7 @@ import java.awt.event.KeyListener;
 import java.awt.Point;
 
 public class Snake implements Drawable, Entity, KeyListener {
-  private int score = 3;
+  private int score = 0;
   private int direction = 0;
   private int appleX = (int) (25 * (Math.ceil(Math.abs((Math.random() * 450.0) / 25))));
   private int appleY = (int) (25 * (Math.ceil(Math.abs((Math.random() * 450.0) / 25))));
