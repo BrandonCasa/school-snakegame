@@ -18,6 +18,8 @@ public class Window {
     frame.setResizable(false);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
+    frame.toFront();
+    frame.requestFocus();
     System.out.println("Game Started");
   }
 }

@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
@@ -13,8 +15,10 @@ import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import java.awt.Point;
+
 public class Snake implements Drawable, Entity, KeyListener {
-  private int score = 0;
+  private int score = 3;
   private int direction = 0;
   private int appleX = (int) (25 * (Math.ceil(Math.abs((Math.random() * 450.0) / 25))));
   private int appleY = (int) (25 * (Math.ceil(Math.abs((Math.random() * 450.0) / 25))));
@@ -150,6 +154,14 @@ public class Snake implements Drawable, Entity, KeyListener {
         System.exit(0);
       }
     }
+    ArrayList<Point> points = new ArrayList<Point>();
+    for (int i = 0; i < pastX.size(); i++) {
+      points.add(new Point(pastX.get(i), pastY.get(i)));
+    }
+    if (hasDuplicate(points)) {
+      System.out.println("Final Score: " + score);
+      System.exit(0);
+    }
   }
 
   @Override
@@ -186,5 +198,15 @@ public class Snake implements Drawable, Entity, KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
+  }
+
+  public static <T> boolean hasDuplicate(Iterable<T> all) {
+    Set<T> set = new HashSet<T>();
+    // Set#add returns false if the set does not change, which
+    // indicates that a duplicate element has been added.
+    for (T each : all)
+      if (!set.add(each))
+        return true;
+    return false;
   }
 }
