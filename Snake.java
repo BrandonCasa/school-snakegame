@@ -99,6 +99,7 @@ public class Snake implements Drawable, Entity, KeyListener {
         }
         pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) - 25);
       } else {
+        System.out.println("Hit Top Wall!");
         System.out.println("Final Score: " + score);
         System.exit(0);
       }
@@ -116,6 +117,7 @@ public class Snake implements Drawable, Entity, KeyListener {
         }
         pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) + 25);
       } else {
+        System.out.println("Hit Bottom Wall!");
         System.out.println("Final Score: " + score);
         System.exit(0);
       }
@@ -133,6 +135,7 @@ public class Snake implements Drawable, Entity, KeyListener {
         }
         pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) + 25);
       } else {
+        System.out.println("Hit Right Wall!");
         System.out.println("Final Score: " + score);
         System.exit(0);
       }
@@ -150,6 +153,7 @@ public class Snake implements Drawable, Entity, KeyListener {
         }
         pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) - 25);
       } else {
+        System.out.println("Hit Left Wall!");
         System.out.println("Final Score: " + score);
         System.exit(0);
       }
@@ -159,6 +163,7 @@ public class Snake implements Drawable, Entity, KeyListener {
       points.add(new Point(pastX.get(i), pastY.get(i)));
     }
     if (hasDuplicate(points)) {
+      System.out.println("Self Collision!");
       System.out.println("Final Score: " + score);
       System.exit(0);
     }
@@ -191,6 +196,7 @@ public class Snake implements Drawable, Entity, KeyListener {
       }
     }
     if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+      System.out.println("User Requested End of Game.");
       System.out.println("Final Score: " + score);
       System.exit(0);
     }
