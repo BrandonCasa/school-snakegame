@@ -70,12 +70,13 @@ public class SnakeGame extends Canvas implements Runnable {
     entities.add(snake);
     drawables.add(snake);
 
-    this.addKeyListener(snake);
-
     Window window = new Window(WIDTH, HEIGHT, TITLE, this);
+    this.addKeyListener(snake);
 
     thread = new Thread(this);
     thread.start();
+    this.setFocusable(true);
+    this.requestFocus();
   }
 
   /**
