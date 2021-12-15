@@ -112,20 +112,36 @@ public class Snake implements Drawable, Entity {
 
   public void second() {
     // Up
-    if (direction == 0 && pastY.get(pastY.size() - 1) >= 50) {
-      pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) - 25);
+    if (direction == 0) {
+      if (pastY.get(pastY.size() - 1) >= 50) {
+        pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) - 25);
+      } else {
+        System.exit(0);
+      }
     }
     // Down
-    if (direction == 2 && pastY.get(pastY.size() - 1) <= 425) {
-      pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) + 25);
+    if (direction == 2) {
+      if (pastY.get(pastY.size() - 1) <= 425) {
+        pastY.set(pastY.size() - 1, pastY.get(pastY.size() - 1) + 25);
+      } else {
+        System.exit(0);
+      }
     }
     // Right
     if (direction == 1) {
-      pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) + 25);
+      if (pastX.get(pastX.size() - 1) <= 425) {
+        pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) + 25);
+      } else {
+        System.exit(0);
+      }
     }
     // Left
     if (direction == 3) {
-      pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) - 25);
+      if (pastX.get(pastX.size() - 1) >= 50) {
+        pastX.set(pastX.size() - 1, pastX.get(pastX.size() - 1) - 25);
+      } else {
+        System.exit(0);
+      }
     }
   }
 }

@@ -95,9 +95,9 @@ public class SnakeGame extends Canvas implements Runnable {
       render();
 
       // reset if a second has passed
-      if (System.currentTimeMillis() - secondTimer > 1000) {
+      if (System.currentTimeMillis() - secondTimer > 750) {
         updatePerSecond();
-        secondTimer += 1000;
+        secondTimer += 750;
       }
     }
   }
