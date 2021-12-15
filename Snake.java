@@ -10,11 +10,12 @@ import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
-import lc.kra.system.keyboard.GlobalKeyboardHook;
-import lc.kra.system.keyboard.event.GlobalKeyAdapter;
-import lc.kra.system.keyboard.event.GlobalKeyEvent;
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
-public class Snake implements Drawable, Entity {
+public class Snake implements Drawable, Entity, NativeKeyListener {
   private int score = 0;
   private int direction = 0;
   private int appleX = (int) (25 * (Math.ceil(Math.abs((Math.random() * 450.0) / 25))));
@@ -30,6 +31,35 @@ public class Snake implements Drawable, Entity {
   private BufferedImage imgApple = null;
   private BufferedImage imgBody = null;
 
+  public void nativeKeyPressed(NativeKeyEvent e) {
+    // System.out.println("Key Pressed: " +
+    // NativeKeyEvent.getKeyText(e.getKeyCode()));
+    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Left") {
+      if (direction != 1) {
+        direction = 3;
+      }
+    }
+    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Right") {
+      if (direction != 3) {
+        direction = 1;
+      }
+    }
+    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Up") {
+      if (direction != 2) {
+        direction = 0;
+      }
+    }
+    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Down") {
+      if (direction != 0) {
+        direction = 2;
+      }
+    }
+
+    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Escape") {
+      System.exit(0);
+    }
+  }
+
   public Snake() {
     try {
       imgUp = ImageIO.read(getClass().getClassLoader().getResource("images/headUp.png"));
@@ -40,46 +70,6 @@ public class Snake implements Drawable, Entity {
       imgBody = ImageIO.read(getClass().getClassLoader().getResource("images/body.png"));
     } catch (IOException e) {
     }
-
-    GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
-    System.out.println("Keyboard hook successfully started, press [escape] key to shutdown. Beginning Game.");
-
-    keyboardHook.addKeyListener(new GlobalKeyAdapter() {
-
-      @Override
-      public void keyPressed(GlobalKeyEvent event) {
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_RIGHT) {
-          if (direction != 3) {
-            direction = 1;
-          }
-        }
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_LEFT) {
-          if (direction != 1) {
-            direction = 3;
-          }
-        }
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_UP) {
-          if (direction != 2) {
-            direction = 0;
-          }
-        }
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_DOWN) {
-          if (direction != 0) {
-            direction = 2;
-          }
-        }
-
-        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_ESCAPE) {
-          keyboardHook.shutdownHook();
-          System.exit(0);
-        }
-      }
-
-      @Override
-      public void keyReleased(GlobalKeyEvent event) {
-        // System.out.println(event);
-      }
-    });
   }
 
   /**
