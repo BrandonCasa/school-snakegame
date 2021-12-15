@@ -6,9 +6,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import com.github.kwhat.jnativehook.GlobalScreen;
-import com.github.kwhat.jnativehook.NativeHookException;
-
 public class SnakeGame extends Canvas implements Runnable {
 
   /**
@@ -55,16 +52,6 @@ public class SnakeGame extends Canvas implements Runnable {
    */
   public static void main(String[] args) {
     new SnakeGame();
-    try {
-      GlobalScreen.registerNativeHook();
-    } catch (NativeHookException ex) {
-      System.err.println("There was a problem registering the native hook.");
-      System.err.println(ex.getMessage());
-
-      System.exit(1);
-    }
-
-    GlobalScreen.addNativeKeyListener(snake);
   }
 
   /**
@@ -82,6 +69,8 @@ public class SnakeGame extends Canvas implements Runnable {
     // snake
     entities.add(snake);
     drawables.add(snake);
+
+    this.addKeyListener(snake);
 
     Window window = new Window(WIDTH, HEIGHT, TITLE, this);
 

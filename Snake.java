@@ -10,12 +10,10 @@ import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
-import com.github.kwhat.jnativehook.GlobalScreen;
-import com.github.kwhat.jnativehook.NativeHookException;
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
-import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Snake implements Drawable, Entity, NativeKeyListener {
+public class Snake implements Drawable, Entity, KeyListener {
   private int score = 0;
   private int direction = 0;
   private int appleX = (int) (25 * (Math.ceil(Math.abs((Math.random() * 450.0) / 25))));
@@ -30,35 +28,6 @@ public class Snake implements Drawable, Entity, NativeKeyListener {
   private BufferedImage imgLeft = null;
   private BufferedImage imgApple = null;
   private BufferedImage imgBody = null;
-
-  public void nativeKeyPressed(NativeKeyEvent e) {
-    // System.out.println("Key Pressed: " +
-    // NativeKeyEvent.getKeyText(e.getKeyCode()));
-    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Left") {
-      if (direction != 1) {
-        direction = 3;
-      }
-    }
-    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Right") {
-      if (direction != 3) {
-        direction = 1;
-      }
-    }
-    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Up") {
-      if (direction != 2) {
-        direction = 0;
-      }
-    }
-    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Down") {
-      if (direction != 0) {
-        direction = 2;
-      }
-    }
-
-    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Escape") {
-      System.exit(0);
-    }
-  }
 
   public Snake() {
     try {
@@ -205,5 +174,41 @@ public class Snake implements Drawable, Entity, NativeKeyListener {
         System.exit(0);
       }
     }
+  }
+
+  @Override
+  public void keyTyped(KeyEvent e) {
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+      if (direction != 3) {
+        direction = 1;
+      }
+    }
+    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+      if (direction != 1) {
+        direction = 3;
+      }
+    }
+    if (e.getKeyCode() == KeyEvent.VK_UP) {
+      if (direction != 2) {
+        direction = 0;
+      }
+    }
+    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+      if (direction != 0) {
+        direction = 2;
+      }
+    }
+    if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+      System.out.println("Final Score: " + score);
+      System.exit(0);
+    }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
   }
 }

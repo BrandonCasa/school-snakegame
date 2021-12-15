@@ -1,3 +1,6 @@
 {
-  "java.project.referencedLibraries": ["lib/**/*.jar", "system-hook-3.8.jar", "deps/system-hook-3.8.jar", "deps/jnativehook-2.2.1.jar"]
+  "java.project.referencedLibraries": {
+    "include": ["lib/**/*.jar", "system-hook-3.8.jar", "deps/system-hook-3.8.jar"],
+    "exclude": ["deps/jnativehook-2.2.1.jar"]
+  }
 }
