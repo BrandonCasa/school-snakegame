@@ -175,22 +175,22 @@ public class Snake implements Drawable, Entity, KeyListener {
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
       if (direction != 3) {
         direction = 1;
       }
     }
-    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+    if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
       if (direction != 1) {
         direction = 3;
       }
     }
-    if (e.getKeyCode() == KeyEvent.VK_UP) {
+    if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
       if (direction != 2) {
         direction = 0;
       }
     }
-    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+    if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
       if (direction != 0) {
         direction = 2;
       }
